@@ -58,7 +58,7 @@ public:
 		if (!show)
 			return;
 
-		ImGui::Begin("MadMaxDevTool");
+		ImGui::Begin("MadMaxMenu");
 
 		ImGui::SliderFloat("Health", &current_health, 1, 2000);
 		ImGui::SameLine();
