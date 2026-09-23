@@ -70,7 +70,7 @@ public:
 				//Log("Your health has been set to %g", current_health);
 			}
 			else
-				//Log("Can't grab Player Object.");
+				Log("Can't grab Player Object.");
 		}
 
 		ImGui::End();

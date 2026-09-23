@@ -1,3 +1,4 @@
+ 
 [submodule "mm"]
 	path = mm
-	url = https://github.com/gigaHours/mm_sdk.git
+	url = https://github.com/jmarreroc/mm_sdk.git
