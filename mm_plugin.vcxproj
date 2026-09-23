@@ -24,7 +24,7 @@
     <ClCompile Include="mm\minhook\src\trampoline.c" />
     <ClCompile Include="mm\math3d.cpp" />
     <ClCompile Include="plugin.cpp" />
-    <ClCompile Include="spawnermenu.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="mm\imgui\imgui\imgui.cpp" />
     <ClCompile Include="mm\imgui\imgui\imgui_detour_dx11.cpp" />
     <ClCompile Include="mm\imgui\imgui\imgui_draw.cpp" />
@@ -89,13 +89,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -113,17 +113,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetExt>.asi</TargetExt>
-    <OutDir>..\..\..\Program Files %28x86%29\Steam\steamapps\common\Mad Max\scripts</OutDir>
+    <OutDir>..\..\..\..\Games\SteamLibrary\steamapps\common\Mad Max\scripts</OutDir>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);.\</IncludePath>
-    <TargetName>mm_spawner</TargetName>
+    <TargetName>mm_tools</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetExt>.asi</TargetExt>
-    <OutDir>..\..\..\Program Files %28x86%29\Steam\steamapps\common\Mad Max\scripts</OutDir>
+    <OutDir>..\..\..\..\Games\SteamLibrary\steamapps\common\Mad Max\scripts</OutDir>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);</LibraryPath>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);.\</IncludePath>
-    <TargetName>mm_spawner</TargetName>
+    <TargetName>mm_tools</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

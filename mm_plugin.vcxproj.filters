@@ -66,7 +66,7 @@
     <ClCompile Include="mm\imgui\imgui_renderer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="spawnermenu.cpp">
+    <ClCompile Include="menu.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="mm\imgui\imgui.cpp">
