@@ -1,4 +1,4 @@
  
 [submodule "sdk_folder"]
-	path = sdk_folder
+	path = mm
 	url = https://github.com/Alxer123/mm_sdk.git
