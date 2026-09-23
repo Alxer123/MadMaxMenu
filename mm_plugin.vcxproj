@@ -36,6 +36,7 @@
     <ClCompile Include="mm\imgui\imgui_renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="healthblock.h" />
     <ClInclude Include="mm\core.h" />
     <ClInclude Include="mm\core\avasingle.h" />
     <ClInclude Include="mm\core\input.h" />
@@ -47,6 +48,7 @@
     <ClInclude Include="mm\game\go\go.h" />
     <ClInclude Include="mm\game\go\pfxgo.h" />
     <ClInclude Include="mm\game\go\physgo.h" />
+    <ClInclude Include="mm\game\go\vehicle.h" />
     <ClInclude Include="mm\game\spawnsystem.h" />
     <ClInclude Include="mm\hookmgr.h" />
     <ClInclude Include="mm\minhook\src\buffer.h" />
