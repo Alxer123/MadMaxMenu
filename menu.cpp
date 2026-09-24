@@ -60,17 +60,46 @@ public:
 
 		ImGui::Begin("MadMaxMenu");
 
-		ImGui::SliderFloat("Health", &current_health, 1, 2000);
-		ImGui::SameLine();
 
-		if (ImGui::Button("Set"))
+		if (ImGui::BeginTabBar("DevMenuTabs"))
 		{
-			if (pPlayer != nullptr) {
-				pPlayer->SetHealth(current_health);
-				//Log("Your health has been set to %g", current_health);
+			
+			if (ImGui::BeginTabItem("Player"))
+			{
+				ImGui::SliderFloat("Health", &current_health, 1, 2000);
+				ImGui::SameLine();
+
+				if (ImGui::Button("Set"))
+				{
+					if (pPlayer != nullptr) {
+						pPlayer->SetHealth(current_health);
+						//Log("Your health has been set to %g", current_health);
+					}
+					else
+						Log("Can't grab Player Object.");
+				}
+
+				ImGui::EndTabItem();
 			}
-			else
-				Log("Can't grab Player Object.");
+
+
+
+			if (ImGui::BeginTabItem("World"))
+			{
+				ImGui::Text("World settings here (Time, Weather, Position)");
+
+				ImGui::EndTabItem();
+			}
+
+
+
+			if (ImGui::BeginTabItem("Debug"))
+			{
+				ImGui::Text("Player Base Address: 0x%llX", (uintptr_t)pPlayer);
+
+				ImGui::EndTabItem();
+			}
+
 		}
 
 		ImGui::End();
