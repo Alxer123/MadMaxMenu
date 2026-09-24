@@ -37,6 +37,7 @@ public:
 	void Render() override {
 
 		static float current_health = 1000.0f;
+		static bool bInvulnerable = false;
 
 		if (force_hide)
 			return;
@@ -45,6 +46,9 @@ public:
 		if (CAvaSingle<CCharacterManager>::Instance != nullptr) {
 			pPlayer = CAvaSingle<CCharacterManager>::Instance->GetPlayerCharacter();
 		}
+
+		CVehicle* pVehicle = nullptr;
+		pVehicle = pPlayer->GetVehiclePtr();
 
 		if (ImGui::IsKeyJustDown(ImGuiKey_Backslash)) {
 			show = !show;
@@ -79,6 +83,13 @@ public:
 						Log("Can't grab Player Object.");
 				}
 
+				ImGui::Checkbox("Invulnerable (Only foot only)", &bInvulnerable);
+
+				if (pPlayer != nullptr)
+				{
+					pPlayer->SetInvulnerable(bInvulnerable);
+				}
+
 				ImGui::EndTabItem();
 			}
 
@@ -96,6 +107,8 @@ public:
 			if (ImGui::BeginTabItem("Debug"))
 			{
 				ImGui::Text("Player Base Address: 0x%llX", (uintptr_t)pPlayer);
+				ImGui::Text("Vehicle Base Address: 0x%llX", (uintptr_t)pVehicle);
+
 
 				ImGui::EndTabItem();
 			}
