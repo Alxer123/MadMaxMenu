@@ -8,6 +8,7 @@
 #include "mm/game/spawnsystem.h"
 #include "mm/game/charactermanager.h"
 #include "mm/game/game.h"
+#include "mm/game/go/vehicle.h"
 
 class ImGuiMenu : public ImGuiRenderer {
 public:
@@ -36,6 +37,7 @@ public:
 	char input_buffer[256] = { 0 };
 	void Render() override {
 
+		
 		static float current_health = 1000.0f;
 		static bool bInvulnerable = false;
 
@@ -43,12 +45,17 @@ public:
 			return;
 
 		CCharacter* pPlayer = nullptr;
+		CVehicle* pVehicle = nullptr;
+		CVector3f* pPos = nullptr;
+
 		if (CAvaSingle<CCharacterManager>::Instance != nullptr) {
 			pPlayer = CAvaSingle<CCharacterManager>::Instance->GetPlayerCharacter();
 		}
 
-		CVehicle* pVehicle = nullptr;
-		pVehicle = pPlayer->GetVehiclePtr();
+		if (pPlayer != nullptr) {
+			pVehicle = pPlayer->GetVehiclePtr();
+			pPos = pPlayer->GetPosition();
+		}
 
 		if (ImGui::IsKeyJustDown(ImGuiKey_Backslash)) {
 			show = !show;
@@ -97,7 +104,124 @@ public:
 
 			if (ImGui::BeginTabItem("World"))
 			{
-				ImGui::Text("World settings here (Time, Weather, Position)");
+				struct FastTravelPoint {
+					const char* Name;
+					CVector3f Coords;
+				};
+				
+				static FastTravelPoint locations[] = {
+					{ "Jeet's Stronghold",   { -3611.0f, 500.0f, 3880.0f } },
+					{ "Gutgash's Stronghold",{ -7015.0f, 365.0f, 4870.0f } },
+					{ "Pink Eye's Silo",     { -6890.0f, 511.0f, 36.0f } },
+					{ "Gastown",             { -3780.0f, 577.0f, -3090.0f } },
+					{ "Deep Friah's Temple", { -3938.0f, 476.0f, -1431.0f } },
+					{ "Chum's Hideout",      { -3139.0f, 321.0f, 6441.0f } },
+					{ "The Dunes Region",    { -509.0f, 484.0f, -732.0f } }
+				};
+
+				static int selected_idx = 0;
+
+				ImGui::Text("Fast Travel");
+				ImGui::Spacing();
+
+				if (ImGui::BeginCombo("##LocationCombo", locations[selected_idx].Name))
+				{
+					for (int i = 0; i < IM_ARRAYSIZE(locations); i++)
+					{
+						bool is_selected = (selected_idx == i);
+						if (ImGui::Selectable(locations[i].Name, is_selected)) {
+							selected_idx = i;
+						}
+						if (is_selected) {
+							ImGui::SetItemDefaultFocus();
+						}
+					}
+					ImGui::EndCombo();
+				}
+
+				ImGui::Spacing();
+
+				ImGui::TextColored(ImVec4(0.6f, 0.6f, 0.6f, 1.0f), "Target XYZ: %.1f, %.1f, %.1f",
+					locations[selected_idx].Coords.x,
+					locations[selected_idx].Coords.y,
+					locations[selected_idx].Coords.z);
+
+				ImGui::Spacing();
+
+				if (ImGui::Button("Teleport")) {
+					CVector3f targetCoords = locations[selected_idx].Coords;
+
+					SendGameEvent([targetCoords]() {
+						CCharacter* tPlayer = CAvaSingle<CCharacterManager>::Instance->GetPlayerCharacter();
+
+						if (tPlayer) {
+							CMatrix4f targetMatrix;
+							CVehicle* tVehicle = tPlayer->GetVehiclePtr();
+							CGameObject* pTargetGO = nullptr;
+
+							if (tVehicle) {
+								pTargetGO = tVehicle;
+								tVehicle->SetVelocity(CVector3f());
+								tVehicle->GetTransform(&targetMatrix);
+							}
+							else {
+								pTargetGO = tPlayer;
+								tPlayer->ForceNeutralState();
+								tPlayer->GetTransform(&targetMatrix);
+							}
+
+							targetMatrix.SetPosition(targetCoords);
+							pTargetGO->SetTransform(&targetMatrix);
+						}
+					});
+				}
+
+				ImGui::Spacing();
+				ImGui::Separator();
+				ImGui::Spacing();
+
+				ImGui::Text("Custom Teleport");
+				ImGui::Spacing();
+
+				static CVector3f custom_coords = { 0.0f, 0.0f, 0.0f };
+
+				ImGui::InputFloat3("X / Y / Z", &custom_coords.x);
+
+				if (ImGui::Button("Teleport to Custom XYZ"))
+				{
+					CVector3f targetCoords = custom_coords;
+
+					SendGameEvent([targetCoords]() {
+						CCharacter* tPlayer = CAvaSingle<CCharacterManager>::Instance->GetPlayerCharacter();
+						if (tPlayer != nullptr) {
+							CMatrix4f targetMatrix;
+							CVehicle* tVehicle = tPlayer->GetVehiclePtr();
+							CGameObject* pTargetGO = nullptr;
+
+							if (tVehicle) {
+								pTargetGO = (CGameObject*)tVehicle;
+								tVehicle->SetVelocity(CVector3f());
+								tVehicle->GetTransform(&targetMatrix);
+							}
+							else {
+								pTargetGO = (CGameObject*)tPlayer;
+								tPlayer->ForceNeutralState();
+								tPlayer->GetTransform(&targetMatrix);
+							}
+
+							targetMatrix.SetPosition(targetCoords);
+							pTargetGO->SetTransform(&targetMatrix);
+						}
+						});
+				}
+
+
+				if (pPos != nullptr) {
+					ImGui::Text("Current X: %.1f, Y(height): %.1f, Z: %.1f", pPos->x, pPos->y, pPos->z);
+				}
+				else {
+					ImGui::Text("Waiting for Player object...");
+				}
 
 				ImGui::EndTabItem();
 			}
@@ -107,7 +231,22 @@ public:
 			if (ImGui::BeginTabItem("Debug"))
 			{
 				ImGui::Text("Player Base Address: 0x%llX", (uintptr_t)pPlayer);
+				ImGui::SameLine();
+				if (ImGui::Button("Copy##Player"))
+				{
+					char hexString[32];
+					snprintf(hexString, sizeof(hexString), "0x%llX", (uintptr_t)pPlayer);
+					ImGui::SetClipboardText(hexString);
+				}
+
 				ImGui::Text("Vehicle Base Address: 0x%llX", (uintptr_t)pVehicle);
+				ImGui::SameLine();
+				if (ImGui::Button("Copy##Vehicle"))
+				{
+					char hexString[32];
+					snprintf(hexString, sizeof(hexString), "0x%llX", (uintptr_t)pVehicle);
+					ImGui::SetClipboardText(hexString);
+				}
 
 
 				ImGui::EndTabItem();
