@@ -116,7 +116,10 @@ public:
 					{ "Gastown",             { -3780.0f, 577.0f, -3090.0f } },
 					{ "Deep Friah's Temple", { -3938.0f, 476.0f, -1431.0f } },
 					{ "Chum's Hideout",      { -3139.0f, 321.0f, 6441.0f } },
-					{ "The Dunes Region",    { -509.0f, 484.0f, -732.0f } }
+					{ "The Dunes Region",    { -509.0f, 484.0f, -732.0f } },
+					{ "a00_tests_sound_explosions",    { 4792.0f, 248, 13466.0f } },
+					{ "a00_tests_sound_room_types",    { 4789.0f, 248, 13790.0f } },
+					{ "a00_tests_spawn_vehicle",    { 2131.0f, 248, 13453.0f } }
 				};
 
 				static int selected_idx = 0;
