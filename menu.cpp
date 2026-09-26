@@ -77,7 +77,7 @@ public:
 			
 			if (ImGui::BeginTabItem("Player"))
 			{
-				ImGui::SliderFloat("Health", &current_health, 1, 2000);
+				ImGui::SliderFloat("Health", &current_health, 1, pPlayer->max_health);
 				ImGui::SameLine();
 
 				if (ImGui::Button("Set"))
@@ -119,7 +119,8 @@ public:
 					{ "The Dunes Region",    { -509.0f, 484.0f, -732.0f } },
 					{ "a00_tests_sound_explosions",    { 4792.0f, 248, 13466.0f } },
 					{ "a00_tests_sound_room_types",    { 4789.0f, 248, 13790.0f } },
-					{ "a00_tests_spawn_vehicle",    { 2131.0f, 248, 13453.0f } }
+					{ "a00_tests_spawn_vehicle",    { 2131.0f, 248, 13453.0f } },
+					{ "Intro Menu",    { 1821.0f, 483, 6203.0f } }
 				};
 
 				static int selected_idx = 0;

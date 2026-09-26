@@ -36,18 +36,20 @@
     <ClCompile Include="mm\imgui\imgui_renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="healthblock.h" />
     <ClInclude Include="mm\core.h" />
     <ClInclude Include="mm\core\avasingle.h" />
     <ClInclude Include="mm\core\input.h" />
     <ClInclude Include="mm\game\charactermanager.h" />
     <ClInclude Include="mm\game\events.h" />
     <ClInclude Include="mm\game\game.h" />
+    <ClInclude Include="mm\game\go\avatar.h" />
     <ClInclude Include="mm\game\go\character.h" />
     <ClInclude Include="mm\game\go\damageable.h" />
     <ClInclude Include="mm\game\go\go.h" />
+    <ClInclude Include="mm\game\go\healthblock.h" />
     <ClInclude Include="mm\game\go\pfxgo.h" />
     <ClInclude Include="mm\game\go\physgo.h" />
+    <ClInclude Include="mm\game\go\player.h" />
     <ClInclude Include="mm\game\go\vehicle.h" />
     <ClInclude Include="mm\game\spawnsystem.h" />
     <ClInclude Include="mm\hookmgr.h" />

@@ -203,7 +203,13 @@
     <ClInclude Include="mm\game\go\vehicle.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="healthblock.h">
+    <ClInclude Include="mm\game\go\avatar.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="mm\game\go\player.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="mm\game\go\healthblock.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
